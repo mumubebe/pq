@@ -25,7 +25,7 @@ setuptools.setup(
     setup_requires=["wheel"],
     entry_points={
         "console_scripts": [
-            "pipespector=pipespector.cli:main",
+            "pq=pq.cli:main",
         ],
     },
 )
