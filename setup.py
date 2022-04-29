@@ -23,6 +23,9 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
     setup_requires=["wheel"],
+    install_requires=[
+          'rich',
+      ],
     entry_points={
         "console_scripts": [
             "pq=pq.cli:main",
