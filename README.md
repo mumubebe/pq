@@ -1,5 +1,5 @@
 # pq
-pq is a Python command-line JSON processor - **almost** like jq, but using Python
+pq is a Python command-line JSON processor - **almost** like jq, but using Python focusing on simplicity and convenience with familiar syntax.
 
 ```
 python -m pip install git+https://github.com/mumubebe/pq.git
@@ -51,3 +51,4 @@ echo '[{"name": "eric", "siblings": ["lena"]}, {"name": "daniel", "siblings": ["
 "jan"
 "julia"
 ```
+
