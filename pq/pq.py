@@ -40,6 +40,8 @@ class Pipeline:
     """One or multiple expressions connected"""
 
     def __init__(self, jsondata, str_input):
+        str_input = str_input or ""
+        
         if len(str_input) and (str_input[0] == "[" and str_input[-1] == "]"):
             str_input = str_input[1:-1]
             self.array = True

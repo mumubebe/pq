@@ -4,7 +4,7 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(description='pq is a Python command-line JSON processor')
-    parser.add_argument('expression')
+    parser.add_argument('expression', nargs='?')
 
     args = parser.parse_args()
 
