@@ -28,7 +28,7 @@ $ echo '{"example": "data", "nothing": "interesting"}' | pq "j.get('nada')"
 
 ```
 
-*** List slicing ***
+**List slicing**
 ```
 $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[0]"
 {
@@ -43,7 +43,7 @@ $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[-1
 }
 ```
 
-***Pipe***
+**Pipe**
 
 ```
 echo '[{"name": "eric", "siblings": ["lena"]}, {"name": "daniel", "siblings": ["jan", "julia"]}]' | pq "j[:] | j['siblings']"
