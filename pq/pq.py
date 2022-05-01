@@ -66,7 +66,7 @@ class Pipeline:
     def __init__(self, json_stream, str_input):
         str_input = str_input or ""
 
-        jsondata = json.loads(json_stream.read(), object_pairs_hook=decoder)
+        jsondata = json.loads(json_stream.read(), object_hook=decoder)
 
         if type(jsondata) == list:
             jsondata = JSONItemList(jsondata)
