@@ -20,7 +20,7 @@ $ echo '{"text": "Text here", "header": "Header", "list": [1,2,3]}' | pq
 }
 ```
 
-**Filters**
+### Filters
 The processing is handled with filters, like in jq.
 j represents the current input object in a filter. 
 ```
@@ -39,7 +39,7 @@ $ echo '{"example": "data", "nothing": "interesting"}' | pq "j.get('nada')"
 
 ```
 
-**List slicing**
+### List slicing
 ```
 $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[0]"
 {
@@ -54,7 +54,7 @@ $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[-1
 }
 ```
 
-**Pipe**
+### Pipes
 Pipes let you chain multiple filters by produce output to the filter to the right of the pipe. Under the hood a pipeline is a chain of generators. An array will for example yield multiple elements to the right. 
 ```
 input: '["a", "b", "c", "d"]'
@@ -86,14 +86,14 @@ $ echo '[1,2,3,4,5,6,7,8,9]' | pq 'j[:] | j**2+50'
 114
 131
 ```
-**Array constructs**
+### Array constructs
 Above example outputs a list of integers. It's possible to wrap it all into a single array by using [] around the full expression.
 ```
 $ echo '[1,2,3,4,5,6,7,8,9]' | pq '[j[:] | j**2+50]'
 
 [51, 54, 59, 66, 75, 86, 99, 114, 131]
 ```
-**Object constructs**
+### Object constructs
 ```
 $ echo '{"name":"jan", "age":4, "parents": ["lisa", "dan"]}' | pq '{"name": j["name"], "parents": j["parents"]}'
 
