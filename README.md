@@ -72,7 +72,7 @@ Pipes let you chain multiple filters by produce output to the filter to the righ
 
 input: 
 ```json
-'["a", "b", "c", "d"]'
+["a", "b", "c", "d"]
 ```
 ```
 pq "j[0:2] | j.upper()"
