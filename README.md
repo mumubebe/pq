@@ -1,12 +1,13 @@
 # pq-json
-pq is a Python command-line JSON processor - **almost** like jq, but using Python focusing on simplicity and convenience with familiar syntax. 
+pq is a Python command-line JSON processor - **almost** like (atleast inspired by 🐶️) [jq](https://github.com/stedolan/jq), but using Python focusing on simplicity and convenience with familiar syntax.
 
+## Install
 ```
 python -m pip install git+https://github.com/mumubebe/pq.git
 ```
 
 
-Here is a simple example for parsing JSON. Output from pq is pretty printed using Rich.
+Here is a simple example for parsing JSON. Output from pq is pretty printed using [Rich](https://github.com/Textualize/rich).
 ```
 $ echo '{"text": "Text here", "header": "Header", "list": [1,2,3]}' | pq
 {
@@ -19,6 +20,7 @@ $ echo '{"text": "Text here", "header": "Header", "list": [1,2,3]}' | pq
   ]
 }
 ```
+![Pretty Parse](https://github.com/mumubebe/pq/blob/main/images/prettyrprint.png)
 
 ### Filters
 The processing is handled with filters, like in jq.
