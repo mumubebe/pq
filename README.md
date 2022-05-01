@@ -3,7 +3,7 @@ pq is a Python command-line JSON processor - **almost** like (atleast inspired b
 
 ## Install
 ```
-python -m pip install git+https://github.com/mumubebe/pq.git
+pip install pq-json
 ```
 
 

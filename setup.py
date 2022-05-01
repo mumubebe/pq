@@ -18,13 +18,12 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Development Status :: 3 - Alpha",
-        "Operating System :: POSIX",
     ],
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
     setup_requires=["wheel"],
     install_requires=[
-          'rich==12.3.0',
+          'rich',
       ],
     entry_points={
         "console_scripts": [

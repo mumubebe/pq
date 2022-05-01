@@ -1,10 +1,10 @@
-def odig(dct, keys, condition=True):
+def odig(dct, keys, value=None, condition=True):
     if type(dct) == dict and condition:
         for key in keys:
             try:
                 dct = dct[key]
             except KeyError:
-                return None
+                return value
         return dct
     else:
-        return None
+        return value
