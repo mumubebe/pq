@@ -48,6 +48,8 @@ $ echo '{"example": "data", "nothing": "interesting"}' | pq "j.get('nada')"
 ```
 
 ### List slicing
+
+JSON arrays are converted to Python list. 
 ```
 $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[0]"
 ```
@@ -66,6 +68,32 @@ $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[-1
   "age": 44
 }
 ```
+An array always iterates to the next filter. Here we are using the slice symbol [:] to highlight that we are working with an array. 
+$ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[:]"
+```
+```json
+{
+  "name": "eric",
+  "age": 22
+}
+{
+  "name": "daniel",
+  "age": 44
+}
+```
+Want to send the full array to the next filter? Wrap array around ```[]``` brackets like:
+$ echo '[1,2,3,4,5]' | pq "[j[:]]"
+```
+```json
+[
+  1,
+  2,
+  3,
+  4,
+  5
+]
+```
+
 
 ### Pipes
 Pipes let you chain multiple filters by produce output to the filter to the right of the pipe. Under the hood a pipeline is a chain of generators. An array will for example yield multiple elements to the right. 

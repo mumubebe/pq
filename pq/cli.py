@@ -1,7 +1,6 @@
-from .pq import Pipeline, _import_global, JSONItemList
-import json, sys, os
+from .pq import Pipeline, _import_global
+import sys, os
 import argparse
-
 
 
 def main():
@@ -23,8 +22,6 @@ def main():
 
     if args.imports:
         _import_global(args.imports)
-
-
 
     pipeline = Pipeline(json_stream=sys.stdin, str_input=args.expression)
 
