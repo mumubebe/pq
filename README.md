@@ -1,4 +1,4 @@
-# pq
+# pq-json
 pq is a Python command-line JSON processor - **almost** like jq, but using Python focusing on simplicity and convenience with familiar syntax.
 
 ```
