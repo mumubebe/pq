@@ -34,7 +34,7 @@ $ echo '{"example": "data", "nothing": "interesting"}' | pq "j['example']"
 "data"
 ```
 
-```json
+```
 $ echo '{"example": "data", "nothing": "interesting"}' | pq "j['example']"
 ```
 ```json
