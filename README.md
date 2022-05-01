@@ -8,7 +8,7 @@ pip install pq-json
 
 
 Here is a simple example for parsing JSON. Output from pq is pretty printed using [Rich](https://github.com/Textualize/rich).
-```
+```json
 $ echo '{"text": "Text here", "header": "Header", "list": [1,2,3]}' | pq
 {
   "text": "Text here",
@@ -25,24 +25,24 @@ $ echo '{"text": "Text here", "header": "Header", "list": [1,2,3]}' | pq
 ### Filters
 The processing is handled with filters, like in jq.
 j represents the current input object in a filter. 
-```
+```json
 $ echo '{"example": "data", "nothing": "interesting"}' | pq "j['example']"
 "data"
 ```
 
-```
+```json
 $ echo '{"example": "data", "nothing": "interesting"}' | pq "j['example']"
 "data"
 ```
 
 As default, None will not be passed.
-```
+```json
 $ echo '{"example": "data", "nothing": "interesting"}' | pq "j.get('nada')"
 
 ```
 
 ### List slicing
-```
+```json
 $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[0]"
 {
   "name": "eric",
@@ -58,7 +58,7 @@ $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[-1
 
 ### Pipes
 Pipes let you chain multiple filters by produce output to the filter to the right of the pipe. Under the hood a pipeline is a chain of generators. An array will for example yield multiple elements to the right. 
-```
+```json
 input: '["a", "b", "c", "d"]'
 
 pq "j[0:2] | j.upper()"
@@ -90,13 +90,13 @@ $ echo '[1,2,3,4,5,6,7,8,9]' | pq 'j[:] | j**2+50'
 ```
 ### Array constructs
 Above example outputs a list of integers. It's possible to wrap it all into a single array by using [] around the full expression.
-```
+```json
 $ echo '[1,2,3,4,5,6,7,8,9]' | pq '[j[:] | j**2+50]'
 
 [51, 54, 59, 66, 75, 86, 99, 114, 131]
 ```
 ### Object constructs
-```
+```json
 $ echo '{"name":"jan", "age":4, "parents": ["lisa", "dan"]}' | pq '{"name": j["name"], "parents": j["parents"]}'
 
 {
@@ -108,3 +108,13 @@ $ echo '{"name":"jan", "age":4, "parents": ["lisa", "dan"]}' | pq '{"name": j["n
 }
 ```
 
+### Other examples
+
+We can easily use built-in functions in Python
+```json
+$ echo "[1,2,3,4,5,6]" | pq 'sum(j) | {"total": j}'
+
+{
+  "total": 21
+}
+```
