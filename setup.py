@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pq",
-    version="0.1",
+    name="pq-json",
+    version="0.0.1",
     author="mumubebe",
     description="pq is a Python command-line JSON processor",
     long_description=long_description,
@@ -24,7 +24,7 @@ setuptools.setup(
     python_requires=">=3.6",
     setup_requires=["wheel"],
     install_requires=[
-          'rich',
+          'rich==12.3.0',
       ],
     entry_points={
         "console_scripts": [

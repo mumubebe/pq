@@ -1,8 +1,6 @@
-import logging
 from pq.utils import *
 from rich import print_json
-import sys, json
-
+import json
 
 class Filter:
     def __init__(self, expr, producer, first=False):
@@ -71,18 +69,21 @@ class Pipeline:
     def _build_pipeline(self, input_data, pipe_expression):
         """Build a pipeline from user input pipeline-string
 
-        A pipeline consist of atleast "input | output" even if users has not defined any filers, where filters
+        A pipeline consist of atleast "input | output" even if users has not defined any filters, where filters
         are between input and output.
 
         Example of user defined filters:
         $ pq "j[:] | j['name']"
         --->
-        The left right filter consumes what the right filter j[:] produces.
+        The right right filter consumes what the left filter j[:] yields.
+
+        Under the hood, with input and output attached:
+        (input data) | j[:] | j['name'] | -> (output)
         """
         filters = []
         for e in pipe_expression:
             if not filters:
-                # input, not a filter per se
+                # input data, not a filter per se
                 filters.append(Filter(e, producer=input_data, first=True))
             if e:
                 filters.append(Filter(e, producer=filters[-1]))

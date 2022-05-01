@@ -1,4 +1,6 @@
 __pycache__
 .vscode
 venv
-sample.json
+dist
+*.egg-info
+test_files
