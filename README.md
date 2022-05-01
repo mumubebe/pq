@@ -68,9 +68,12 @@ $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[-1
   "age": 44
 }
 ```
+
 An array always iterates to the next filter. Here we are using the slice symbol [:] to highlight that we are working with an array. 
+```
 $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[:]"
 ```
+
 ```json
 {
   "name": "eric",
@@ -81,7 +84,9 @@ $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[:]
   "age": 44
 }
 ```
+
 Want to send the full array to the next filter? Wrap array around ```[]``` brackets like:
+```
 $ echo '[1,2,3,4,5]' | pq "[j[:]]"
 ```
 ```json
