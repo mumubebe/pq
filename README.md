@@ -157,6 +157,18 @@ $ echo '{"name":"jan", "age":4, "parents": ["lisa", "dan"]}' | pq '{"name": j["n
   ]
 }
 ```
+### Custom modules
+
+It's possible to add additional modules to global scope from file or input string.
+We can declare a variable for example.
+```
+echo '[1,2,3]' | pq --module 'two=2' 'j[1]*two'
+```
+```json
+4
+```
+
+
 
 ### Other examples
 

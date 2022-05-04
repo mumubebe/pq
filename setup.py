@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pq-json",
-    version="0.0.2.2",
+    version="0.0.3.0",
     author="mumubebe",
     description="pq is a Python command-line JSON processor",
     long_description=long_description,
