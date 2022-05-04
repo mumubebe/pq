@@ -2,6 +2,7 @@ from pq.utils import *
 from rich import print_json
 import json
 
+
 class Filter:
     def __init__(self, expr, producer, first=False):
         self.first = first
@@ -38,9 +39,9 @@ class Filter:
 class Pipeline:
     """One or multiple filters connected"""
 
-    def __init__(self, json_stream, str_input):
+    def __init__(self, json_stream, str_input, output=True):
         str_input = str_input or ""
-
+        self.output = output
         jsondata = json.loads(json_stream.read())
 
         # Array constructs around expression
@@ -51,8 +52,9 @@ class Pipeline:
             self.array = False
 
         pipe_filters = [s.strip() for s in str_input.split("|")]
-
         self.filters = self._build_pipeline(jsondata, pipe_filters)
+
+        self._output_function = self.json_output
 
     @property
     def last(self):
@@ -69,6 +71,14 @@ class Pipeline:
             return self.filters[1]
         else:
             raise IndexError("No filters in pipeline")
+
+    @property
+    def output_function(self):
+        return self._output_function
+
+    @output_function.setter
+    def output_function(self, func):
+        self._output_function = func
 
     def _build_pipeline(self, input_data, pipe_expression):
         """Build a pipeline from user input pipeline-string
@@ -94,26 +104,40 @@ class Pipeline:
         return filters
 
     def run(self):
-        """Run pipeline chain and print ouput"""
+        """Run pipeline chain with a callback for output"""
+        if self.output:
+            self._output_function(self.last.eval_loop())
 
+    def json_output(self, output):
         # Buff yielded items if array filter
         if self.array:
             buff = []
-            for output in self.last.eval_loop():
+            for o in output:
                 buff.append(output)
-
-            self.print(buff)
         else:
-            for output in self.last.eval_loop():
-                self.print(output)
-
-    def print(self, output):
-        try:
-            print_json(json.dumps(output))
-        except:
-            print(json.dumps(output, indent=2))
+            for o in output:
+                try:
+                    print_json(json.dumps(o))
+                except:
+                    print(json.dumps(o, indent=2))
 
 
-def _import_global(import_str):
-    """Import modules to global context"""
-    exec(import_str, globals())
+def _import_custom_modules(str_or_path, from_file=False):
+    """Import Python file or input string and read it to global context
+
+    It will prevent from changing any variable in globals() - only add new ones.
+    """
+    _globals = globals()
+    global_copy = _globals.copy()
+    if from_file:
+        module_str = open(str_or_path, "r").read()
+    else:
+        module_str = str_or_path
+
+    exec(module_str, global_copy)
+
+    for k, v in global_copy.items():
+        if k not in _globals:
+            _globals[k] = v
+        elif _globals[k] != v:
+            print(f"Changing already existing {k} to {v}")

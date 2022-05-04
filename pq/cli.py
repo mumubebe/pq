@@ -1,4 +1,4 @@
-from .pq import Pipeline, _import_global
+from .pq import Pipeline, _import_custom_modules
 import sys, os
 import argparse
 
@@ -9,9 +9,14 @@ def main():
     )
     parser.add_argument("expression", nargs="?")
     parser.add_argument(
-        "-i",
-        "--imports",
-        help='Additional import modules separated with semicolon. --imports "import datetime as dt"',
+        "-c",
+        "--module",
+        help="Additional module from input string. Let's you define custom functions or other imports",
+    )
+    parser.add_argument(
+        "-M",
+        "--module-file",
+        help="Additional modules from file. Let's you define custom functions",
     )
 
     if os.isatty(0):
@@ -20,9 +25,11 @@ def main():
 
     args = parser.parse_args()
 
-    if args.imports:
-        _import_global(args.imports)
+    if args.module:
+        _import_custom_modules(args.module)
+
+    if args.module_file:
+        _import_custom_modules(args.module_file, from_file=True)
 
     pipeline = Pipeline(json_stream=sys.stdin, str_input=args.expression)
-
     pipeline.run()
