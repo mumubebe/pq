@@ -2,6 +2,7 @@ from pq.utils import *
 from rich import print_json
 import json
 
+execution_context = {}
 
 class Filter:
     def __init__(self, expr, producer, first=False):
@@ -15,7 +16,7 @@ class Filter:
         return compile(f"({self.expr})", "<string>", "eval")
 
     def evaluate(self, item):
-        return eval(self._compiled, {"j": item}, globals())
+        return eval(self._compiled, {"j": item}, execution_context)
 
     def eval_loop(self):
         if self.first:
@@ -123,21 +124,13 @@ class Pipeline:
 
 
 def _import_custom_modules(str_or_path, from_file=False):
-    """Import Python file or input string and read it to global context
-
-    It will prevent from changing any variable in globals() - only add new ones.
+    """Import Python file or input string and read it to Filters execution context
     """
-    _globals = globals()
-    global_copy = _globals.copy()
     if from_file:
         module_str = open(str_or_path, "r").read()
     else:
         module_str = str_or_path
 
-    exec(module_str, global_copy)
+    exec(module_str, execution_context)
 
-    for k, v in global_copy.items():
-        if k not in _globals:
-            _globals[k] = v
-        elif _globals[k] != v:
-            print(f"Changing already existing {k} to {v}")
+    
