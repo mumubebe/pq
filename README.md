@@ -71,16 +71,10 @@ $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[:]
 }
 ```
 
-Want to send the full array to the next filter? Wrap array around ```[]``` brackets like:
+Want to accumulate an array to the next expression? Use the flag ```-a``` after the pipe sign, like this:
 ```
-$ echo '[1,2,3,4,5]' | pq "[j[:]]"
-[
-  1,
-  2,
-  3,
-  4,
-  5
-]
+$ echo '[1,2,3,4,5]' | pq "j[:] | -a max(j)"
+5
 ```
 
 

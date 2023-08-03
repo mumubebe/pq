@@ -4,3 +4,4 @@ venv*
 dist
 *.egg-info
 test_files
+output.json

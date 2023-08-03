@@ -8,6 +8,12 @@ class Filter:
     def __init__(self, expr, producer, first=False):
         self.first = first
         self.producer = producer
+        self.accumulate = False
+
+        if len(expr) > 1 and expr[:2] == "-a":
+            self.accumulate = True
+            expr = expr[2:]
+        
         self.expr = expr
         if not first:
             self._compiled = self._compile()
@@ -22,10 +28,20 @@ class Filter:
         if self.first:
             yield self.producer
         else:
-            for p in self.producer.eval_loop():
+            #get generator from producer
+            producer_gen = self.producer.eval_loop()
+            for p in producer_gen:
+                # Accumulate means that this we will buffer up all the producers data into a list
+                # Allows us to do max() etc.
+                if self.accumulate:
+                    acc = [a for a in producer_gen]
+                    acc.insert(0, p)
+                    p = acc
+
                 if not p:
                     continue
                 val = self.evaluate(p)
+                
                 if not val:
                     continue
 
