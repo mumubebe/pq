@@ -71,11 +71,6 @@ $ echo '[{"name": "eric", "age": 22}, {"name": "daniel", "age": 44}]' | pq "j[:]
 }
 ```
 
-Want to accumulate an array to the next expression? Use the flag ```-a``` after the pipe sign, like this:
-```
-$ echo '[1,2,3,4,5]' | pq "j[:] | -a max(j)"
-5
-```
 
 
 ### Pipes
@@ -113,9 +108,14 @@ $ echo '[1,2,3,4,5,6,7,8,9]' | pq 'j[:] | j**2+50'
 131
 ```
 ### Array constructs
-Above example outputs a list of integers. It's possible to wrap it all into a single array by using [] around the full expression.
+Above example outputs a list of integers. It's possible to accumulate data into an array. Use the flag ```-a``` after the pipe sign, like this:
 ```
-$ echo '[1,2,3,4,5,6,7,8,9]' | pq '[j[:] | j**2+50]'
+$ echo '[1,2,3,4,5]' | pq "j[:] | -a max(j)"
+5
+```
+Here is another example:
+```
+$ echo '[1,2,3,4,5,6,7,8,9]' | pq 'j[:] | j**2+50 | -a [j]'
 [51, 54, 59, 66, 75, 86, 99, 114, 131]
 ```
 ### Object constructs
