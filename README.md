@@ -19,6 +19,12 @@ $ echo '{"text": "Text here", "header": "Header", "list": [1,2,3]}' | pq
     3
   ]
 }
+
+#j represents the current input object in a filter.
+echo '{"text": "Text here", "header": "Header", "list": [1,2,3]}' | pq 'j["list"] | j * 4'
+4
+8
+12
 ```
 
 ### Filters
